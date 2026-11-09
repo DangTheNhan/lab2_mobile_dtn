@@ -7,8 +7,9 @@ import BatteryScreen from '../screens/BatteryScreen';
 
 const Tab = createBottomTabNavigator();
 
-// Custom Sun tab icon
-const SunTabIcon: React.FC<{color: string; size: number}> = ({color, size}) => {
+type TabIconProps = {color: string; size: number};
+
+const renderSunTabIcon = ({color, size}: TabIconProps) => {
   const c = size / 2;
   const cr = size * 0.2;
   const ri = size * 0.32;
@@ -39,8 +40,7 @@ const SunTabIcon: React.FC<{color: string; size: number}> = ({color, size}) => {
   );
 };
 
-// Custom Battery tab icon
-const BatteryTabIcon: React.FC<{color: string; size: number}> = ({color, size}) => {
+const renderBatteryTabIcon = ({color, size}: TabIconProps) => {
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24">
       <G>
@@ -87,20 +87,12 @@ const BottomTabs: React.FC = () => {
         <Tab.Screen
           name="Brightness"
           component={BrightnessScreen}
-          options={{
-            tabBarIcon: ({color, size}) => (
-              <SunTabIcon color={color} size={size} />
-            ),
-          }}
+          options={{tabBarIcon: renderSunTabIcon}}
         />
         <Tab.Screen
           name="Battery"
           component={BatteryScreen}
-          options={{
-            tabBarIcon: ({color, size}) => (
-              <BatteryTabIcon color={color} size={size} />
-            ),
-          }}
+          options={{tabBarIcon: renderBatteryTabIcon}}
         />
       </Tab.Navigator>
     </NavigationContainer>
